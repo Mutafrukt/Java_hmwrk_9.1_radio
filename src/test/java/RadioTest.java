@@ -1,61 +1,90 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvFileSource;
 
 public class RadioTest {
 
-    @Test
-    public void shouldPressButtonPlusForVolume(){
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/radioTestForIncreaseVolume.csv")
+
+    public void shouldPressButtonPlusForVolume(int newCurrentVolume, int expected) {
 
         Radio radio = new Radio();
 
-        radio.setCurrentVolume(4);
+        radio.setCurrentVolume(newCurrentVolume);
         radio.increaseVolume();
 
-        int expected = 5;
         int actual = radio.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldPressButtonMinusForVolume(){
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/radioTestForDecreaseVolume.csv")
+
+    public void shouldPressButtonMinusForVolume(int newCurrentVolume, int expected) {
 
         Radio radio = new Radio();
 
-        radio.setCurrentVolume(10);
+        radio.setCurrentVolume(newCurrentVolume);
         radio.decreaseVolume();
 
-        int expected = 9;
         int actual = radio.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);
-
     }
 
-    @Test
-    public void shouldPressNextButtonForStation(){
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/radioTestForNextStationButton.csv")
+    public void shouldPressNextButtonForStation(int currentStationNumber, int expected) {
 
         Radio radio = new Radio();
 
-        radio.setNewCurrentStation(6);
+        radio.setNewCurrentStation(currentStationNumber);
         radio.nextStation();
 
-        int expected = 7;
         int actual = radio.getCurrentStationNumber();
 
         Assertions.assertEquals(expected, actual);
     }
 
-    @Test
-    public void shouldPressPrevButtonForStation(){
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/radioTestForPrevStationButton.csv")
+    public void shouldPressPrevButtonForStation(int currentStationNumber, int expected) {
 
         Radio radio = new Radio();
 
-        radio.setNewCurrentStation(0);
+        radio.setNewCurrentStation(currentStationNumber);
         radio.prevStation();
 
-        int expected = 9;
         int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/radioTestForNotSetStationOverLimit.csv")
+    public void shouldNotSetStationOverAndUnderLimit(int newCurrentStationNumber, int expected) {
+
+        Radio radio = new Radio();
+
+        radio.setNewCurrentStation(newCurrentStationNumber);
+
+        int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest
+    @CsvFileSource(files = "src/test/resources/radioTestForNotSetVolumeOverAndUnderLimit.csv")
+    public void shouldNotSetVolumeOverAndUnderLimit(int newCurrentVolume, int expected) {
+
+        Radio radio = new Radio();
+
+        radio.setCurrentVolume(newCurrentVolume);
+
+        int actual = radio.getCurrentVolume();
 
         Assertions.assertEquals(expected, actual);
     }
