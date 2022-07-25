@@ -1,8 +1,16 @@
 public class Radio {
 
     public int currentStationNumber;
-
     public int currentVolume;
+    public int quantityOfStations = 10;
+
+    public Radio() {
+        ///по умолчанию, если пользователь не выставил количество станций
+    }
+
+    public Radio(int quantityOfStations) {
+        this.quantityOfStations = quantityOfStations;
+    }
 
     public int getCurrentStationNumber() {
         return currentStationNumber;
