@@ -3,6 +3,10 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
+
+/////////////////////!!! НОВЫЕ ТЕСТЫ ДЛЯ ЭТОГО ЗАДАНИЯ - со строчки 100 !!!/////////////////////
+
+
 public class RadioTest {
 
     @ParameterizedTest
@@ -76,7 +80,7 @@ public class RadioTest {
         Assertions.assertEquals(expected, actual);
     }
 
-    @ParameterizedTest
+   @ParameterizedTest
     @CsvFileSource(files = "src/test/resources/radioTestForNotSetVolumeOverAndUnderLimit.csv")
     public void shouldNotSetVolumeOverAndUnderLimit(int newCurrentVolume, int expected) {
 
@@ -85,6 +89,50 @@ public class RadioTest {
         radio.setCurrentVolume(newCurrentVolume);
 
         int actual = radio.getCurrentVolume();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    ///НОВЫЕ ТЕСТЫ ДЛЯ КОНСТРУКТОРА///
+
+
+    @ParameterizedTest ///Если пользователь захотел установить количество станций
+    @CsvFileSource(files = "src/test/resources/radioConstructorShoulSetNumberOfStations.csv")
+    public void shouldSetNumberOfStationsWhenConstructor
+            (int customQuantityOfStations, int newCurrentStationNumber, int expected) {
+
+        Radio radio = new Radio(customQuantityOfStations);
+        radio.setNewCurrentStation(newCurrentStationNumber);
+
+        int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest ///Переключение на следующую станцию при количестве станций, установленном пользователем
+    @CsvFileSource(files = "src/test/resources/radioConstructorShouldPressNextButtonForStation.csv")
+    public void shouldPressNextButtonForStationWhenConstructor
+            (int customQuantityOfStations, int newCurrentStationNumber, int expected) {
+
+        Radio radio = new Radio(customQuantityOfStations);
+        radio.setNewCurrentStation(newCurrentStationNumber);
+        radio.nextStation();
+
+        int actual = radio.getCurrentStationNumber();
+
+        Assertions.assertEquals(expected, actual);
+    }
+
+    @ParameterizedTest ///Переключение на предыдущюу станцию при количестве станций, установленном пользователем
+    @CsvFileSource(files = "src/test/resources/radioConstructorShouldPressPrevButtonForStation.csv")
+    public void shouldPressPrevButtonForStationWhenConstructor
+            (int customQuantityOfStations, int newCurrentStationNumber, int expected) {
+
+        Radio radio = new Radio(customQuantityOfStations);
+        radio.setNewCurrentStation(newCurrentStationNumber);
+        radio.prevStation();
+
+        int actual = radio.getCurrentStationNumber();
 
         Assertions.assertEquals(expected, actual);
     }

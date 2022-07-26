@@ -1,8 +1,18 @@
 public class Radio {
 
     public int currentStationNumber;
-
     public int currentVolume;
+    public int quantityOfStations = 10;
+
+    public Radio() {
+        ///по умолчанию, если пользователь не выставил количество станций
+    }
+
+    public Radio(int customQuantityOfStations) {
+
+        this.quantityOfStations = customQuantityOfStations;
+    }
+
 
     public int getCurrentStationNumber() {
         return currentStationNumber;
@@ -16,7 +26,7 @@ public class Radio {
         if (newCurrentVolume < 0) {
             return;
         }
-        if (newCurrentVolume > 10) {
+        if (newCurrentVolume > 100) {
             return;
         }
 
@@ -27,7 +37,7 @@ public class Radio {
         if (newCurrentStationNumber < 0) {
             return;
         }
-        if (newCurrentStationNumber > 9) {
+        if (newCurrentStationNumber > quantityOfStations - 1) {
             return;
         }
 
@@ -36,7 +46,7 @@ public class Radio {
 
     public void increaseVolume() {
 
-        if (currentVolume < 10) {
+        if (currentVolume < 100) {
             currentVolume = currentVolume + 1;
         }
     }
@@ -48,7 +58,7 @@ public class Radio {
     }
 
     public void nextStation() {
-        if (currentStationNumber < 9) {
+        if (currentStationNumber < quantityOfStations - 1) {
             currentStationNumber = currentStationNumber + 1;
         } else {
             currentStationNumber = 0;
@@ -59,8 +69,7 @@ public class Radio {
         if (currentStationNumber > 0) {
             currentStationNumber = currentStationNumber - 1;
         } else {
-            currentStationNumber = 9;
+            currentStationNumber = quantityOfStations - 1;
         }
     }
-
 }
